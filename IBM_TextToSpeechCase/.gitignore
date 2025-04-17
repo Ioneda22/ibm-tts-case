@@ -1,0 +1,22 @@
+# Ignorar a pasta .vs/ (Visual Studio)
+.vs/
+
+# Ignorar bin e obj (diretórios de build)
+bin/
+obj/
+
+# Ignorar arquivos de configuração do usuário
+.vsconfig
+.idea/
+
+# Ignorar o arquivo de log
+*.log
+
+# Ignorar arquivos de pacotes gerenciados
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignorar o arquivo que contém as infos da API
+appsettings.Development.json

@@ -1,0 +1,6 @@
+@IBM_TextToSpeechCase_HostAddress = http://localhost:5225
+
+GET {{IBM_TextToSpeechCase_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
