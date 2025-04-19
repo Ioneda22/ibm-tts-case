@@ -68,7 +68,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
    Após rodar a solução, você deverá ser redirecionado para a interface do Swagger no seu navegador, que terá essa cara:
    ![swagger-p1](./images/swagger-p1.png)  
 
-4. **Colocar as o texto desejado na corpo da requisição**
+4. **Colocar o texto desejado no corpo da requisição**
    ![swagger-p2](./images/swagger-p2.png)
    
 5. **Fazer download do arquivo contendo o áudio**
