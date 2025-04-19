@@ -27,3 +27,52 @@ O projeto segue uma arquitetura simples e bem organizada, separando responsabili
 O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da aplicação, desde a requisição do usuário até a resposta com o áudio:
 
 ![Fluxo da aplicação](./images/tts-scheme.png)
+
+
+
+
+## ▶️ Instruções de uso
+
+### ✅ Pré-requisitos
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
+- Uma conta na [IBM Cloud](https://cloud.ibm.com/registration) com o serviço **Text to Speech** provisionado
+- (Desejável) [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/pt-br/vs/community/) 
+
+### 🧪 Passo a passo
+
+1. **Clone o repositório**
+   ```bash
+   git clone https://github.com/Ioneda22/ibm-tts-case.git
+   cd ibm-tts-case
+
+2. **Colocar a credencias da API em `appsettings.json`**  
+   O caminho para o arquivo em questão é `ibm-tts-case/IBM_TextToSpeechCase/IBM_TextToSpeechCase/appsettings.json`
+    ```csharp
+    {
+    "Logging": {
+        "LogLevel": {
+            "Default": "Information",
+            "Microsoft.AspNetCore": "Warning"
+        }
+    },
+    "IBMTextToSpeechCredentials": {
+        "ApiKey": "INSERT_YOUR_API_KEY_HERE", //Inserir aqui sua chave
+        "Url": "INSERT_YOUR_API_URL_HERE" //Inserir aqui sua url
+    },
+    "AllowedHosts": "*"
+    }
+
+3. **Abrir o arquivo `.sln` (`ibm-tts-case/IBM_TextToSpeechCase/IBM_TextToSpeechCase.sln`) no Visual Studio e rodar o programa**
+
+   Após rodar a solução, você deverá ser redirecionado para a interface do Swagger no seu navegador, que terá essa cara:
+   ![swagger-p1](./images/swagger-p1.png)  
+
+4. **Colocar as o texto desejado na corpo da requisição**
+   ![swagger-p2](./images/swagger-p2.png)
+   
+5. **Fazer download do arquivo contendo o áudio**
+   ![swagger-p3](./images/swagger-p3.png)   
+
+
+
