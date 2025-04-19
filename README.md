@@ -2,7 +2,7 @@
 
 Este projeto é uma API REST desenvolvida em .NET 8 que utiliza o serviço **Text to Speech** da **IBM Cloud** para converter textos em áudio. O serviço recebe uma string com o texto desejado e retorna um arquivo de áudio no formato `.wav`, sintetizado com uma voz natural em português brasileiro.
 
-
+<br/><br/>
 
 ## 📁 Funcionamento do projeto
 
@@ -28,8 +28,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 
 ![Fluxo da aplicação](./images/tts-scheme.png)
 
-
-
+<br/><br/>
 
 ## ▶️ Instruções de uso
 
@@ -37,7 +36,11 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
 - Uma conta na [IBM Cloud](https://cloud.ibm.com/registration) com o serviço **Text to Speech** provisionado
-- (Desejável) [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/pt-br/vs/community/) 
+- [Postman](https://www.postman.com/) 
+- (Desejável) [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/pt-br/vs/community/)
+ 
+
+<br/>
 
 ### 🧪 Passo a passo
 
@@ -74,6 +77,8 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 5. **Fazer download do arquivo contendo o áudio**
    ![swagger-p3](./images/swagger-p3.png)   
 
+<br/>
+
 ### 🚀 Simular a requisição usando o Postman
 
 1. **Repetir os passos 1. e 2. citados anteriormente**
@@ -88,6 +93,8 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
     "text": "Insira seu texto aqui"
    }
   ![swagger-p2](./images/postman.png)
+
+<br/>
 
 ### ❗OBSERVAÇÕES❗
 
