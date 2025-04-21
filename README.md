@@ -37,7 +37,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
 - Uma conta na [IBM Cloud](https://cloud.ibm.com/registration) com o serviço **Text to Speech** provisionado
 - [Postman](https://www.postman.com/) 
-- (Desejável) [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/pt-br/vs/community/)
+- (Opcional) [Docker](https://www.docker.com/)
  
 
 <br/>
@@ -66,26 +66,9 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
     "AllowedHosts": "*"
     }
 
-3. **Abrir o arquivo `.sln` (`ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase.sln`) no Visual Studio e rodar o programa**
+3. **Rodar o comando `dotnet run` no terminal dentro da pasta `ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase` (pasta que contém o arquivo `IBM_TextToSpeechCase.csproj`). Você também pode rodar o comando `docker-compose up --build`, para criar um contêiner da aplicação no Docker. Os passos seguintes são os mesmos para ambas as opções.**
 
-   Após rodar a solução, você deverá ser redirecionado para a interface do Swagger no seu navegador, que terá essa cara:
-   ![swagger-p1](./images/swagger-p1.png)  
-
-4. **Colocar o texto desejado no corpo da requisição**
-   ![swagger-p2](./images/swagger-p2.png)
-   
-5. **Fazer download do arquivo contendo o áudio**
-   ![swagger-p3](./images/swagger-p3.png)   
-
-<br/>
-
-### 🚀 Simular a requisição usando o Postman
-
-1. **Repetir os passos 1. e 2. citados anteriormente**
-
-2. **Rodar o comando `dotnet run` no terminal dentro da pasta `ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase` (pasta que contém o arquivo `IBM_TextToSpeechCase.csproj`)**
-
-3. **Postman**
+4. **Postman**
    
    Criar uma nova requisição do tipo `POST` no Postman com a URL `http://localhost:5225/api/TextToSpeech/synthesize-pt-BR` e colocar no corpo da requisição seu texto:
    ```json
@@ -98,7 +81,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 
 ### ❗OBSERVAÇÕES❗
 
-Caso as portas `http:5225` e `https:7291` estejam sendo utilizadas no seu computador, será necessário inserir outra porta livre no arquivo `launchSettings.json`(`ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase\Properties`)
+Se portas `http:5225` e `https:7291` estejam sendo utilizadas no seu computador, será necessário inserir outra porta livre no arquivo `launchSettings.json`(`ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase\Properties`). Caso esteja usando o Docker, mude as também as portas nos arquivos `Dockerfile` e `docker-compose.yml`, que estão na pasta `ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase`.
 ```csharp
 "http": {
   "commandName": "Project",
