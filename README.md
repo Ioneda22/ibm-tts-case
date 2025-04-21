@@ -2,7 +2,7 @@
 
 Este projeto é uma API REST desenvolvida em .NET 8 que utiliza o serviço **Text to Speech** da **IBM Cloud** para converter textos em áudio. O serviço recebe uma string com o texto desejado e retorna um arquivo de áudio no formato `.wav`, sintetizado com uma voz natural em português brasileiro.
 
-
+<br/><br/>
 
 ## 📁 Funcionamento do projeto
 
@@ -28,8 +28,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 
 ![Fluxo da aplicação](./images/tts-scheme.png)
 
-
-
+<br/><br/>
 
 ## ▶️ Instruções de uso
 
@@ -37,7 +36,11 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
 
 - [.NET 8 SDK](https://dotnet.microsoft.com/en-us/download)
 - Uma conta na [IBM Cloud](https://cloud.ibm.com/registration) com o serviço **Text to Speech** provisionado
-- (Desejável) [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/pt-br/vs/community/) 
+- [Postman](https://www.postman.com/) 
+- (Desejável) [Visual Studio 2022 Community Edition](https://visualstudio.microsoft.com/pt-br/vs/community/)
+ 
+
+<br/>
 
 ### 🧪 Passo a passo
 
@@ -47,7 +50,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
    cd ibm-tts-case
 
 2. **Colocar a credencias da API em `appsettings.json`**  
-   O caminho para o arquivo em questão é `ibm-tts-case/IBM_TextToSpeechCase/IBM_TextToSpeechCase/appsettings.json`
+   O caminho para o arquivo em questão é `ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase\appsettings.json`
     ```csharp
     {
     "Logging": {
@@ -63,7 +66,7 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
     "AllowedHosts": "*"
     }
 
-3. **Abrir o arquivo `.sln` (`ibm-tts-case/IBM_TextToSpeechCase/IBM_TextToSpeechCase.sln`) no Visual Studio e rodar o programa**
+3. **Abrir o arquivo `.sln` (`ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase.sln`) no Visual Studio e rodar o programa**
 
    Após rodar a solução, você deverá ser redirecionado para a interface do Swagger no seu navegador, que terá essa cara:
    ![swagger-p1](./images/swagger-p1.png)  
@@ -73,6 +76,50 @@ O diagrama abaixo ilustra resumidamente o fluxo de dados entre os componentes da
    
 5. **Fazer download do arquivo contendo o áudio**
    ![swagger-p3](./images/swagger-p3.png)   
+
+<br/>
+
+### 🚀 Simular a requisição usando o Postman
+
+1. **Repetir os passos 1. e 2. citados anteriormente**
+
+2. **Rodar o comando `dotnet run` no terminal dentro da pasta `ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase` (pasta que contém o arquivo `IBM_TextToSpeechCase.csproj`)**
+
+3. **Postman**
+   
+   Criar uma nova requisição do tipo `POST` no Postman com a URL `http://localhost:5225/api/TextToSpeech/synthesize-pt-BR` e colocar no corpo da requisição seu texto:
+   ```json
+   {
+    "text": "Insira seu texto aqui"
+   }
+  ![swagger-p2](./images/postman.png)
+
+<br/>
+
+### ❗OBSERVAÇÕES❗
+
+Caso as portas `http:5225` e `https:7291` estejam sendo utilizadas no seu computador, será necessário inserir outra porta livre no arquivo `launchSettings.json`(`ibm-tts-case\IBM_TextToSpeechCase\IBM_TextToSpeechCase\Properties`)
+```csharp
+"http": {
+  "commandName": "Project",
+  "dotnetRunMessages": true,
+  "launchBrowser": true,
+  "launchUrl": "swagger",
+  "applicationUrl": "http://localhost:{Insira sua porta aqui}",
+  "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  }
+},
+"https": {
+  "commandName": "Project",
+  "dotnetRunMessages": true,
+  "launchBrowser": true,
+  "launchUrl": "swagger",
+  "applicationUrl": "https://localhost:{Insira sua porta aqui};http://localhost:{Insira sua porta aqui}",
+  "environmentVariables": {
+    "ASPNETCORE_ENVIRONMENT": "Development"
+  }
+}, 
 
 
 
