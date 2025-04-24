@@ -5,43 +5,38 @@ using TextToSpeechAPI.Models;
 namespace TextToSpeechAPI.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] // Controlador: Lida com  as requisições dos usuários
+    [Route("api/[controller]")] // Define a rota base como "api/texttospeech"
     public class TextToSpeechController : ControllerBase
     {
-        private readonly TextToSpeechService _ttsService; // Atributo do Service
+        private readonly TextToSpeechService _ttsService;
 
+        // Injeta o serviço de TTS no controller
         public TextToSpeechController(TextToSpeechService ttsService)
         {
             _ttsService = ttsService;
         }
 
-        [HttpPost("synthesize-pt-BR")] // Endpoint POST para lidar com o TTS
+        [HttpPost("synthesize-pt-BR")] // Rota POST que recebe texto e retorna um áudio em português do Brasil
         public IActionResult ConvertText([FromBody] TextRequest request)
         {
-            if (!IsTextValid(request.Text)) // Verifica se o texto recebido é válido
-                return BadRequest("Text cannot be empty.");
-
             try
             {
-                var audioBytes = _ttsService.ConvertTextToSpeech(request.Text, "pt-BR_IsabelaV3Voice"); // Variável que recebe o áudio da função ConvertTextToSpeech da classe do Serviço.
-                                                                                                        // Como segundo parâmetro, colocamos a voz/língua do áudio que queremos e, nesse caso,
-                                                                                                        // estamos usando uma voz brasileira
+                // Converte o texto em áudio usando a voz brasileira Isabela
+                var audioBytes = _ttsService.ConvertTextToSpeech(request.Text, "pt-BR_IsabelaV3Voice");
 
-                if (audioBytes != null)
-                    return File(audioBytes, "audio/wav", "speech.wav");
-
-                return StatusCode(500, "Audio could not be generated.");
+                // Retorna o áudio como arquivo .wav
+                return File(audioBytes, "audio/wav", "speech.wav");
             }
-            catch (Exception ex) // Tratamento de exceções na conversão
+            catch (ArgumentException ex)
             {
-                return StatusCode(500, $"Error converting text to speech: {ex.Message}");
+                // Retorna erro 400 se o texto for inválido
+                return BadRequest(ex.Message);
             }
-        }
-
-        private bool IsTextValid(string text) // Função que verifica se um texto é válido
-        {
-            return (!string.IsNullOrWhiteSpace(text) // Verifica se o texto contém somente espaços em branco
-                && System.Text.RegularExpressions.Regex.IsMatch(text, @"[a-zA-Z0-9]")); // Verifica se o texto contém algum caractere válido
+            catch (Exception ex)
+            {
+                // Retorna erro 500 se ocorrer falha geral na conversão
+                return StatusCode(500, $"Erro ao converter texto em fala: {ex.Message}");
+            }
         }
     }
 }

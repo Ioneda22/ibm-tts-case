@@ -4,46 +4,57 @@ using TTS = IBM.Watson.TextToSpeech.v1;
 
 namespace TextToSpeechAPI.Services
 {
-    public class TextToSpeechService // Classe Serviço: encapsula uma lógica de negócio específica, nesse caso, a lógica do TTS
+    // Serviço responsável por encapsular a lógica de uso da API IBM Watson Text to Speech
+    public class TextToSpeechService
     {
-        private readonly TTS.TextToSpeechService _textToSpeechService; // Atributo do serviço do IBM Watson TTS
-        private readonly string _apiKey; // Atributo referente a chave da API
-        private readonly string _url; // Atributo referente a url da API
+        private readonly TTS.TextToSpeechService _textToSpeechService;
+        private readonly string _apiKey;
+        private readonly string _url;
 
+        // Inicializa o serviço com as credenciais e configura a URL da API
         public TextToSpeechService(IConfiguration config)
         {
             _apiKey = config["IBMTextToSpeechCredentials:ApiKey"];
             _url = config["IBMTextToSpeechCredentials:Url"];
 
-            IamAuthenticator authenticator = new IamAuthenticator(apikey: _apiKey); // Autenticação das credenciais da API
-            _textToSpeechService = new TTS.TextToSpeechService(authenticator); // Instanciação do serviço do IBM Watson TTS
+            var authenticator = new IamAuthenticator(apikey: _apiKey);
+            _textToSpeechService = new TTS.TextToSpeechService(authenticator);
             _textToSpeechService.SetServiceUrl(_url);
         }
 
+        // Converte texto para áudio, retornando um array de bytes contendo o .wav
         public byte[] ConvertTextToSpeech(string text, string voice)
         {
-            DetailedResponse<MemoryStream> result = SynthesizeTextToSpeech(text, voice); //
+            if (!IsTextValid(text))
+                throw new ArgumentException("Texto inválido para conversão.");
 
-            if (result != null && result.Result != null) // Verifica se a resposta não é nula e se contém um stream de áudio válido
+            var result = CallWatsonSynthesisAPI(text, voice);
+
+            if (result?.Result != null)
             {
-                using (MemoryStream memoryStream = new MemoryStream()) // Cria um novo MemoryStream para armazenar os dados do áudio
-                {
-                    result.Result.WriteTo(memoryStream); // Copia o conteúdo do stream retornado para o novo MemoryStream
-
-                    return memoryStream.ToArray(); // Converte o conteúdo do MemoryStream para um array de bytes e retorna
-                }
+                using var memoryStream = new MemoryStream();
+                result.Result.WriteTo(memoryStream);
+                return memoryStream.ToArray();
             }
 
-            return null;
+            throw new InvalidOperationException("A conversão falhou: resposta da API está vazia.");
         }
 
-        private DetailedResponse<MemoryStream> SynthesizeTextToSpeech(string text, string voice) // Função que chama o método Synthesize, do serviço do IBM Watson
+        // Encapsula a chamada direta à API do IBM Watson
+        private DetailedResponse<MemoryStream> CallWatsonSynthesisAPI(string text, string voice)
         {
             return _textToSpeechService.Synthesize(
                 text: text,
                 accept: "audio/wav",
                 voice: voice
             );
+        }
+
+        // Valida se o texto contém conteúdo útil para conversão
+        private bool IsTextValid(string text)
+        {
+            return !string.IsNullOrWhiteSpace(text)
+                && System.Text.RegularExpressions.Regex.IsMatch(text, @"[a-zA-Z0-9]");
         }
     }
 }
